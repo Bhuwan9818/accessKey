@@ -1,294 +1,394 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="AccessiKey — Accessibility that feels effortless. Smart profiles, contrast tools, reading aids, and compliance reporting for every website." />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="AccessiKey — Accessibility that feels effortless for everyone."/>
   <title>AccessiKey — Accessibility for Everyone</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23F5C518'/><text y='22' x='6' font-size='18'>♿</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
   <style>
+/* ===================================================
+   DESIGN TOKENS — brand palette from logo
+   Navy:    #0D1B40  (dark navy from the "A")
+   Cyan:    #00C2E8  (bright cyan from the key)
+   Sky:     #5BB8E8  (mid-blue from "Key" text)
+   White:   #FFFFFF
+   =================================================== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --midnight: #0A0E1A; --ink: #111827; --slate: #1C2539; --slate2: #243044;
-  --gold: #F5C518; --gold-dim: #D4A80F; --ice: #E8F4FD; --body: #94A3B8; --white: #FFFFFF;
-  --radius: 12px; --radius-lg: 20px;
-  --transition: 0.28s cubic-bezier(.4,0,.2,1);
-  --max-w: 1200px; --section-py: 96px;
+  /* Brand */
+  --navy:       #0D1B40;
+  --navy-deep:  #070F28;
+  --navy-mid:   #162050;
+  --navy-light: #1E2F6A;
+  --cyan:       #00C2E8;
+  --cyan-dim:   #00A8CB;
+  --sky:        #5BB8E8;
+  --sky-light:  #A8D8F0;
+  /* Neutrals */
+  --white:      #FFFFFF;
+  --off-white:  #F0F6FF;
+  --muted:      #8BA3C7;
+  --border:     rgba(0,194,232,0.15);
+  /* Utility */
+  --radius:     12px;
+  --radius-lg:  20px;
+  --radius-xl:  28px;
+  --transition: 0.26s cubic-bezier(.4,0,.2,1);
+  --max-w:      1200px;
+  --section-py: 100px;
+  /* Dark mode defaults */
+  --bg:         #070F28;
+  --bg-2:       #0D1B40;
+  --bg-3:       #162050;
+  --bg-card:    #1A2860;
+  --text:       #FFFFFF;
+  --text-muted: #8BA3C7;
+  --border-col: rgba(0,194,232,0.15);
+}
+[data-theme="light"] {
+  --bg:         #F0F6FF;
+  --bg-2:       #FFFFFF;
+  --bg-3:       #E6F2FF;
+  --bg-card:    #FFFFFF;
+  --text:       #0D1B40;
+  --text-muted: #4A6080;
+  --border-col: rgba(13,27,64,0.12);
+  --muted:      #4A6080;
 }
 html { scroll-behavior: smooth; }
-body { font-family: 'Inter', sans-serif; background: var(--midnight); color: var(--white); line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-h1,h2,h3,h4,h5 { font-family: 'Poppins', sans-serif; line-height: 1.15; letter-spacing: -0.02em; }
-h1 { font-size: clamp(2.4rem,5vw,4.4rem); font-weight: 800; }
-h2 { font-size: clamp(1.8rem,3.5vw,3rem); font-weight: 700; }
-h3 { font-size: clamp(1.3rem,2.2vw,1.9rem); font-weight: 700; }
-h4 { font-size: 1.15rem; font-weight: 600; }
-p  { color: var(--body); }
-a  { text-decoration: none; color: inherit; }
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
+h1,h2,h3,h4,h5 { font-family: 'Manrope', sans-serif; line-height: 1.15; letter-spacing: -0.025em; color: var(--text); }
+h1 { font-size: clamp(2.4rem,5vw,4.2rem); font-weight: 800; }
+h2 { font-size: clamp(1.8rem,3.5vw,2.8rem); font-weight: 800; }
+h4 { font-size: 1.1rem; font-weight: 700; }
+p { color: var(--text-muted); }
+a { text-decoration: none; color: inherit; }
 img { max-width: 100%; display: block; }
 .container { width: 100%; max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+.section { padding: var(--section-py) 0; }
+.section-alt { background: var(--bg-2); }
+.highlight { color: var(--cyan); }
 
 /* BUTTONS */
-.btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; border-radius: 8px; font-family: 'Inter',sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; border: none; transition: var(--transition); white-space: nowrap; }
-.btn-gold { background: var(--gold); color: #0A0E1A; }
-.btn-gold:hover { background: var(--gold-dim); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(245,197,24,0.3); }
-.btn-outline { background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,0.25); }
-.btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
-.btn-sm { padding: 10px 20px; font-size: 0.875rem; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; border-radius: 9px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.92rem; font-weight: 700; cursor: pointer; border: none; transition: var(--transition); white-space: nowrap; letter-spacing: 0.01em; }
+.btn-cyan { background: var(--cyan); color: var(--navy-deep); }
+.btn-cyan:hover { background: var(--cyan-dim); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,194,232,0.35); }
+.btn-outline { background: transparent; color: var(--text); border: 1.5px solid var(--border-col); }
+.btn-outline:hover { border-color: var(--cyan); color: var(--cyan); transform: translateY(-2px); }
+.btn-sm { padding: 9px 20px; font-size: 0.85rem; }
 
 /* EYEBROW */
-.eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
-.eyebrow::before { content: ''; display: block; width: 20px; height: 2px; background: var(--gold); border-radius: 2px; }
-
-/* SECTIONS */
-.section { padding: var(--section-py) 0; }
-.section-dark { background: var(--ink); }
-.highlight { color: var(--gold); }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cyan); margin-bottom: 14px; }
+.eyebrow::before { content: ''; display: block; width: 18px; height: 2px; background: var(--cyan); border-radius: 2px; }
 
 /* REVEAL */
-.reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.55s ease, transform 0.55s ease; }
 .reveal.visible { opacity: 1; transform: none; }
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
 
-/* NAV */
-.site-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 18px 0; transition: background var(--transition), padding var(--transition); }
-.site-nav.scrolled { background: rgba(10,14,26,0.93); backdrop-filter: blur(16px); padding: 12px 0; box-shadow: 0 1px 0 rgba(255,255,255,0.06); }
+/* ========= NAV ========= */
+.site-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 16px 0; transition: background var(--transition), padding var(--transition), box-shadow var(--transition); }
+.site-nav.scrolled { background: rgba(7,15,40,0.94); backdrop-filter: blur(18px); padding: 10px 0; box-shadow: 0 1px 0 rgba(0,194,232,0.1); }
+[data-theme="light"] .site-nav.scrolled { background: rgba(240,246,255,0.95); }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; }
-.nav-logo { display: flex; align-items: center; gap: 10px; font-family: 'Syne',sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--white); }
-.nav-logo .logo-icon { width: 36px; height: 36px; background: var(--gold); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #0A0E1A; }
-.nav-logo .accent { color: var(--gold); }
-.nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
-.nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--body); transition: color var(--transition); }
-.nav-links a:hover { color: var(--white); }
-.has-dropdown > a::after { content: ' ▾'; font-size: 0.7em; }
-.nav-cta { display: flex; align-items: center; gap: 12px; }
-.link-signin { font-size: 0.9rem; font-weight: 500; color: var(--body); transition: color var(--transition); }
-.link-signin:hover { color: var(--white); }
+.nav-logo { display: flex; align-items: center; gap: 10px; }
+.nav-logo-img { height: 38px; width: auto; }
+.nav-logo-text { font-family: 'Manrope', sans-serif; font-size: 1.3rem; font-weight: 800; }
+.nav-logo-text .ak-dark { color: var(--text); }
+.nav-logo-text .ak-cyan { color: var(--cyan); }
+.nav-links { display: flex; align-items: center; gap: 30px; list-style: none; }
+.nav-links a { font-size: 0.88rem; font-weight: 600; color: var(--text-muted); transition: color var(--transition); }
+.nav-links a:hover { color: var(--text); }
+.has-dd > a::after { content: ' ▾'; font-size: 0.65em; opacity: 0.6; }
+.nav-cta { display: flex; align-items: center; gap: 10px; }
+.link-signin { font-size: 0.88rem; font-weight: 600; color: var(--text-muted); transition: color var(--transition); }
+.link-signin:hover { color: var(--cyan); }
+.card-feat-text {color: white !important;}
+.card-title {color: white;}
+.hero-h1 {color: white;}
+.stat-num {color: white !important; }
+.btn-outline { color: white; border-color: rgba(255,255,255,0.15); }
+[data-theme="light"].faq-question{ color: black !important;}
+
+/* Theme toggle */
+.theme-toggle { width: 36px; height: 36px; border-radius: 8px; background: var(--bg-3); border: 1px solid var(--border-col); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; transition: var(--transition); }
+.theme-toggle:hover { border-color: var(--cyan); background: rgba(0,194,232,0.1); }
+
+/* Mobile nav */
 .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; flex-direction: column; gap: 5px; }
-.nav-toggle span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; }
+.nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: var(--transition); }
+.mobile-nav { display: none; position: fixed; inset: 0; background: rgba(7,15,40,0.99); backdrop-filter: blur(24px); z-index: 999   9; flex-direction: column; align-items: center; justify-content: center; gap: 26px; }
+.mobile-nav.open { display: flex; }
+.mobile-nav a { font-family: 'Manrope', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--white); transition: color var(--transition); }
+.mobile-nav a:hover { color: var(--cyan); }
+.mobile-nav-close { position: absolute; top: 22px; right: 22px; background: none; border: none; color: var(--white); font-size: 1.6rem; cursor: pointer; line-height: 1; }
 
-/* HERO */
+/* ========= HERO ========= */
 .hero { position: relative; min-height: 100vh; display: flex; align-items: center; padding-top: 100px; overflow: hidden; }
-.hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(245,197,24,0.07) 0%, transparent 60%), radial-gradient(ellipse 50% 80% at 10% 80%, rgba(56,117,245,0.08) 0%, transparent 50%), linear-gradient(180deg, #0A0E1A 0%, #0d1220 100%); z-index: 0; }
-.hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(245,197,24,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(245,197,24,0.04) 1px, transparent 1px); background-size: 60px 60px; z-index: 0; }
-.hero-orb { position: absolute; border-radius: 50%; filter: blur(80px); z-index: 0; animation: orb-float 8s ease-in-out infinite alternate; }
-.hero-orb-1 { width: 520px; height: 520px; background: rgba(245,197,24,0.07); top: -100px; right: -80px; }
-.hero-orb-2 { width: 320px; height: 320px; background: rgba(56,117,245,0.06); bottom: 60px; left: -60px; animation-delay: -4s; }
-@keyframes orb-float { from { transform: translateY(0) scale(1); } to { transform: translateY(-30px) scale(1.05); } }
-.hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
-.hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; background: rgba(245,197,24,0.1); border: 1px solid rgba(245,197,24,0.2); border-radius: 100px; font-size: 0.8rem; font-weight: 600; color: var(--gold); margin-bottom: 28px; }
-.hero-eyebrow .dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; animation: pulse-dot 2s infinite; }
-@keyframes pulse-dot { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.5; transform:scale(0.7); } }
-.hero-heading { margin-bottom: 24px; }
-.hero-desc { font-size: 1.05rem; color: var(--body); max-width: 480px; margin-bottom: 40px; line-height: 1.75; }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 56px; }
-.hero-stats { display: flex; gap: 40px; }
-.stat-num { font-family: 'Syne',sans-serif; font-size: 2rem; font-weight: 800; color: var(--white); line-height: 1; }
-.stat-label { font-size: 0.8rem; color: var(--body); margin-top: 4px; }
+.hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #070F28 0%, #0D1B40 50%, #091535 100%); z-index: 0; }
+.hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,194,232,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,194,232,0.04) 1px, transparent 1px); background-size: 56px 56px; z-index: 0; }
+.hero-orb { position: absolute; border-radius: 50%; filter: blur(90px); z-index: 0; animation: orb-float 9s ease-in-out infinite alternate; }
+.hero-orb-1 { width: 480px; height: 480px; background: rgba(0,194,232,0.09); top: -80px; right: -60px; }
+.hero-orb-2 { width: 300px; height: 300px; background: rgba(91,184,232,0.07); bottom: 80px; left: -40px; animation-delay: -4s; }
+@keyframes orb-float { from { transform: translateY(0) scale(1); } to { transform: translateY(-28px) scale(1.06); } }
+.hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; width: 100%; }
+.hero-pill { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 6px; background: rgba(0,194,232,0.1); border: 1px solid rgba(0,194,232,0.25); border-radius: 100px; font-size: 0.78rem; font-weight: 700; color: var(--cyan); margin-bottom: 28px; }
+.hero-pill .dot { width: 6px; height: 6px; background: var(--cyan); border-radius: 50%; animation: pulse-dot 2s infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.6)} }
+.hero-h1 { margin-bottom: 22px; }
+.hero-h1 .line-muted { color: var(--text-muted); }
+.hero-desc { font-size: 1.05rem; max-width: 460px; margin-bottom: 38px; line-height: 1.8; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 52px; }
+.hero-stats { display: flex; gap: 36px; padding-top: 24px; border-top: 1px solid var(--border-col); }
+.stat-num { font-family: 'Manrope', sans-serif; font-size: 1.9rem; font-weight: 800; color: var(--text); line-height: 1; }
+.stat-label { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
 
-/* HERO CARD */
-.hero-visual { position: relative; display: flex; justify-content: center; align-items: center; }
-.hero-card { width: 100%; max-width: 480px; background: var(--slate); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-lg); padding: 36px; position: relative; overflow: hidden; }
-.hero-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--gold), transparent); }
-.card-shield { width: 80px; height: 80px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; }
+/* Hero card */
+.hero-visual { position: relative; display: flex; justify-content: center; }
+.hero-card { width: 100%; max-width: 430px; background: rgba(22,32,80,0.7); border: 1px solid rgba(0,194,232,0.2); border-radius: var(--radius-xl); padding: 32px; backdrop-filter: blur(12px); position: relative; overflow: hidden; }
+.hero-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--cyan), transparent 70%); }
+.card-shield { width: 72px; height: 72px; margin: 0 auto 18px; }
 .card-shield svg { width: 100%; height: 100%; }
-.card-title { font-family: 'Syne',sans-serif; font-size: 1.35rem; font-weight: 700; text-align: center; margin-bottom: 8px; }
-.card-sub { text-align: center; font-size: 0.85rem; color: var(--body); margin-bottom: 28px; }
-.card-features { display: flex; flex-direction: column; gap: 12px; }
-.card-feat { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: rgba(255,255,255,0.04); border-radius: var(--radius); border: 1px solid rgba(255,255,255,0.06); transition: var(--transition); cursor: default; }
-.card-feat:hover { background: rgba(245,197,24,0.06); border-color: rgba(245,197,24,0.2); transform: translateX(4px); }
-.card-feat-icon { width: 36px; height: 36px; flex-shrink: 0; border-radius: 8px; background: rgba(245,197,24,0.12); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
-.card-feat-text { font-size: 0.9rem; font-weight: 500; color: var(--white); }
-.card-feat-badge { margin-left: auto; font-size: 0.72rem; padding: 2px 8px; background: rgba(245,197,24,0.12); color: var(--gold); border-radius: 100px; font-weight: 600; }
-.hero-badge { position: absolute; bottom: -20px; left: -24px; background: var(--gold); color: #0A0E1A; padding: 10px 18px; border-radius: var(--radius); font-family: 'Syne',sans-serif; font-weight: 800; font-size: 1rem; box-shadow: 0 12px 32px rgba(245,197,24,0.35); animation: badge-float 4s ease-in-out infinite alternate; z-index: 2; }
-.hero-badge small { display: block; font-family: 'Inter',sans-serif; font-size: 0.7rem; font-weight: 500; opacity: 0.7; }
+.card-title { font-family: 'Manrope', sans-serif; font-size: 1.25rem; font-weight: 800; text-align: center; margin-bottom: 6px; }
+.card-sub { text-align: center; font-size: 0.82rem; color: var(--text-muted); margin-bottom: 24px; }
+.card-features { display: flex; flex-direction: column; gap: 10px; }
+.card-feat { display: flex; align-items: center; gap: 12px; padding: 11px 14px; background: rgba(0,194,232,0.05); border-radius: 10px; border: 1px solid rgba(0,194,232,0.1); transition: var(--transition); }
+.card-feat:hover { background: rgba(0,194,232,0.1); border-color: rgba(0,194,232,0.25); transform: translateX(4px); }
+.card-feat-icon { width: 34px; height: 34px; flex-shrink: 0; border-radius: 8px; background: rgba(0,194,232,0.12); display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+.card-feat-text { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+.card-feat-badge { margin-left: auto; font-size: 0.7rem; padding: 2px 9px; background: rgba(0,194,232,0.12); color: var(--cyan); border-radius: 100px; font-weight: 700; }
+.hero-badge { position: absolute; bottom: -16px; left: -20px; background: var(--cyan); color: var(--navy-deep); padding: 9px 16px; border-radius: 10px; font-family: 'Manrope', sans-serif; font-weight: 800; font-size: 0.95rem; box-shadow: 0 10px 28px rgba(0,194,232,0.4); animation: badge-float 4s ease-in-out infinite alternate; z-index: 2; }
+.hero-badge small { display: block; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.68rem; font-weight: 600; opacity: 0.75; }
 @keyframes badge-float { from { transform: translateY(0) rotate(-2deg); } to { transform: translateY(-8px) rotate(1deg); } }
 
-/* PLATFORM BAR */
-.platform-bar { background: var(--slate); padding: 28px 0; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); overflow: hidden; }
-.platform-bar .container { display: flex; align-items: center; gap: 16px; }
-.platform-label { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--body); white-space: nowrap; padding-right: 24px; border-right: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; }
-.platform-track-wrap { flex: 1; overflow: hidden; mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent); }
-.platform-track { display: flex; gap: 24px; width: max-content; animation: slide-platform 22s linear infinite; }
-.platform-track:hover { animation-play-state: paused; }
-@keyframes slide-platform { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-.platform-item { display: flex; align-items: center; gap: 10px; padding: 8px 20px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 100px; white-space: nowrap; font-size: 0.875rem; font-weight: 500; color: var(--body); transition: var(--transition); cursor: default; }
-.platform-item:hover { background: rgba(245,197,24,0.08); border-color: rgba(245,197,24,0.2); color: var(--white); }
-.pi-avatar { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 700; color: #0A0E1A; flex-shrink: 0; }
-.pi-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.pi-dot-green { background: #22c55e; } .pi-dot-yellow { background: var(--gold); } .pi-dot-blue { background: #3b82f6; }
+/* ========= PLATFORM CAROUSEL ========= */
+.platform-section { background: var(--bg-2); padding: 60px 0; border-top: 1px solid var(--border-col); border-bottom: 1px solid var(--border-col); }
+.platform-header { text-align: center; margin-bottom: 48px; }
+.platform-header h2 { font-size: clamp(1.5rem,3vw,2.2rem); margin-bottom: 10px; }
+.platform-header p { font-size: 0.95rem; }
 
-/* OFFER */
-.offer-inner { display: grid; grid-template-columns: 1fr auto; gap: 64px; align-items: center; background: var(--slate); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-lg); padding: 56px 64px; position: relative; overflow: hidden; }
-.offer-inner::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--gold); }
-.offer-inner::after { content: ''; position: absolute; top: -60px; right: -60px; width: 220px; height: 220px; background: rgba(245,197,24,0.05); border-radius: 50%; filter: blur(40px); }
-.offer-tag { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--gold); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+/* Carousel */
+.carousel-wrap { position: relative; }
+.carousel-track-outer { overflow: hidden; border-radius: var(--radius-lg); }
+.carousel-track { display: flex; gap: 20px; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1); }
+.carousel-slide { flex: 0 0 calc(33.333% - 14px); min-width: 0; }
+.carousel-card { background: var(--bg-card); border: 1px solid var(--border-col); border-radius: var(--radius-lg); padding: 28px; transition: var(--transition); position: relative; overflow: hidden; height: 100%; }
+.carousel-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--cyan), var(--sky)); border-radius: 2px 2px 0 0; }
+.carousel-card:hover { border-color: rgba(0,194,232,0.35); transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.2); }
+.cc-icon { width: 48px; height: 48px; border-radius: 11px; background: rgba(0,194,232,0.1); border: 1px solid rgba(0,194,232,0.15); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 18px; }
+.cc-title { font-family: 'Manrope', sans-serif; font-size: 1.05rem; font-weight: 800; margin-bottom: 8px; color: var(--text); }
+.cc-desc { font-size: 0.875rem; line-height: 1.7; }
+.cc-tag { display: inline-flex; margin-top: 16px; font-size: 0.72rem; font-weight: 700; padding: 3px 10px; background: rgba(0,194,232,0.1); color: var(--cyan); border-radius: 100px; }
+
+/* Carousel controls */
+.carousel-controls { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 36px; }
+.car-btn { width: 44px; height: 44px; border-radius: 50%; border: 1.5px solid var(--border-col); background: var(--bg-card); color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: var(--transition); }
+.car-btn:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0,194,232,0.08); }
+.car-dots { display: flex; gap: 8px; }
+.car-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border-col); cursor: pointer; transition: var(--transition); }
+.car-dot.active { background: var(--cyan); width: 24px; border-radius: 4px; }
+
+/* ========= OFFER / FREE TRIAL ========= */
+.offer-inner { display: grid; grid-template-columns: 1fr auto; gap: 56px; align-items: center; background: var(--bg-card); border: 1px solid var(--border-col); border-radius: var(--radius-xl); padding: 52px 56px; position: relative; overflow: hidden; }
+.offer-inner::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(180deg, var(--cyan), var(--sky)); }
+.offer-inner::after { content: ''; position: absolute; top: -80px; right: -80px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(0,194,232,0.08), transparent 70%); border-radius: 50%; }
+.offer-tag { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--cyan); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
 .offer-tag::before { content: '★'; }
-.offer-heading { margin-bottom: 16px; }
-.offer-desc { margin-bottom: 28px; max-width: 500px; }
-.offer-bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 36px; }
-.offer-bullets li { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: var(--body); }
-.offer-bullets li::before { content: '✓'; font-size: 0.85rem; font-weight: 700; color: var(--gold); width: 20px; height: 20px; background: rgba(245,197,24,0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.offer-actions { display: flex; gap: 16px; flex-wrap: wrap; }
-.offer-image { width: 260px; height: 260px; flex-shrink: 0; border-radius: var(--radius-lg); overflow: hidden; position: relative; z-index: 1; }
-.offer-image-placeholder { width: 100%; height: 100%; background: linear-gradient(135deg, #0d1929, #1a2f4a); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; border: 1px solid rgba(56,117,245,0.15); border-radius: var(--radius-lg); }
-.offer-image-placeholder .big-icon { font-size: 4rem; }
-.offer-image-placeholder p { font-size: 0.82rem; color: var(--body); }
+.offer-heading { font-size: clamp(1.5rem,2.5vw,2.1rem); margin-bottom: 14px; }
+.offer-desc { margin-bottom: 24px; max-width: 480px; font-size: 0.95rem; }
+.offer-bullets { list-style: none; display: flex; flex-direction: column; gap: 9px; margin-bottom: 32px; }
+.offer-bullets li { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; color: var(--text-muted); }
+.offer-bullets li::before { content: '✓'; font-size: 0.8rem; font-weight: 700; color: var(--cyan); width: 20px; height: 20px; background: rgba(0,194,232,0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.offer-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.offer-img-box { width: 240px; height: 240px; flex-shrink: 0; border-radius: var(--radius-lg); background: linear-gradient(135deg, rgba(0,194,232,0.08), rgba(91,184,232,0.05)); border: 1px solid var(--border-col); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; position: relative; z-index: 1; }
+.offer-img-box .big-icon { font-size: 3.5rem; }
+.offer-img-box p { font-size: 0.8rem; color: var(--text-muted); }
 
-/* FEATURES */
-.section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 56px; gap: 24px; }
-.section-header .text h2 { margin-bottom: 12px; }
-.section-header .text p { max-width: 520px; }
-.features-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
-.feat-card { background: var(--slate); border: 1px solid rgba(255,255,255,0.07); border-radius: var(--radius-lg); padding: 32px; transition: var(--transition); position: relative; overflow: hidden; }
-.feat-card::after { content: ''; position: absolute; inset: 0; border-radius: var(--radius-lg); border: 1px solid var(--gold); opacity: 0; transition: opacity var(--transition); }
-.feat-card:hover { transform: translateY(-6px); box-shadow: 0 24px 64px rgba(0,0,0,0.4); }
+/* ========= FEATURES ========= */
+.section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 52px; gap: 24px; }
+.section-header .text h2 { margin-bottom: 10px; }
+.features-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+.feat-card { background: var(--bg-card); border: 1px solid var(--border-col); border-radius: var(--radius-lg); padding: 28px; transition: var(--transition); position: relative; overflow: hidden; }
+.feat-card::after { content: ''; position: absolute; inset: 0; border-radius: var(--radius-lg); border: 1.5px solid var(--cyan); opacity: 0; transition: opacity var(--transition); pointer-events: none; }
+.feat-card:hover { transform: translateY(-5px); box-shadow: 0 20px 56px rgba(0,0,0,0.25); }
 .feat-card:hover::after { opacity: 1; }
-.feat-icon { width: 52px; height: 52px; border-radius: 12px; background: rgba(245,197,24,0.1); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 20px; transition: var(--transition); }
-.feat-card:hover .feat-icon { background: rgba(245,197,24,0.2); transform: scale(1.1); }
-.feat-card h4 { margin-bottom: 10px; }
-.feat-card p { font-size: 0.9rem; line-height: 1.7; }
-.feat-card.featured { background: linear-gradient(135deg, rgba(245,197,24,0.08), rgba(245,197,24,0.02)); border-color: rgba(245,197,24,0.2); }
+.feat-icon { width: 48px; height: 48px; border-radius: 11px; background: rgba(0,194,232,0.1); border: 1px solid rgba(0,194,232,0.15); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 18px; transition: var(--transition); }
+.feat-card:hover .feat-icon { background: rgba(0,194,232,0.18); transform: scale(1.08); }
+.feat-card h4 { margin-bottom: 9px; }
+.feat-card p { font-size: 0.875rem; line-height: 1.72; }
+.feat-card.featured { background: linear-gradient(135deg, rgba(0,194,232,0.09) 0%, var(--bg-card) 100%); border-color: rgba(0,194,232,0.28); }
 
-/* HOW IT WORKS */
-.how-section { background: var(--ink); }
-.steps-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; position: relative; }
-.steps-grid::before { content: ''; position: absolute; top: 36px; left: calc(16.6% + 18px); right: calc(16.6% + 18px); height: 1px; background: linear-gradient(90deg, var(--gold), rgba(245,197,24,0.2), var(--gold)); z-index: 0; }
-.step-card { text-align: center; position: relative; z-index: 1; }
-.step-num { width: 72px; height: 72px; border-radius: 50%; background: var(--slate); border: 2px solid rgba(245,197,24,0.3); margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; font-family: 'Syne',sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--gold); transition: var(--transition); }
-.step-card:hover .step-num { background: var(--gold); color: #0A0E1A; border-color: var(--gold); transform: scale(1.08); }
-.step-card h4 { margin-bottom: 10px; }
-.step-card p { font-size: 0.9rem; }
+/* ========= HOW IT WORKS — NEW ========= */
+.how-section { background: var(--bg-2); position: relative; overflow: hidden; }
+.how-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(0,194,232,0.04), transparent 70%); pointer-events: none; }
+.how-header { text-align: center; max-width: 580px; margin: 0 auto 64px; }
+.how-header h2 { margin-bottom: 12px; }
 
-/* COMPLIANCE */
-.compliance-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-.compliance-img-placeholder { aspect-ratio: 4/3; background: linear-gradient(135deg, #0d2040, #1a3255); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; border: 1px solid rgba(56,117,245,0.2); position: relative; overflow: hidden; }
-.compliance-img-placeholder::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(56,117,245,0.12) 0%, transparent 70%); }
-.compliance-icon-large { font-size: 5rem; position: relative; z-index: 1; }
-.compliance-tags { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; position: relative; z-index: 1; }
-.comp-tag { padding: 4px 12px; background: rgba(56,117,245,0.15); border: 1px solid rgba(56,117,245,0.3); border-radius: 100px; font-size: 0.78rem; font-weight: 600; color: #93c5fd; }
-.compliance-content h2 { margin-bottom: 20px; }
-.compliance-content > p { margin-bottom: 32px; }
-.compliance-list { list-style: none; display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
-.compliance-list li { display: flex; gap: 16px; align-items: flex-start; }
-.comp-icon { width: 44px; height: 44px; flex-shrink: 0; border-radius: 10px; background: rgba(56,117,245,0.1); border: 1px solid rgba(56,117,245,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
-.comp-text h5 { margin-bottom: 4px; font-size: 0.95rem; }
-.comp-text p { font-size: 0.85rem; }
+.hiw-tabs { display: flex; gap: 8px; justify-content: center; margin-bottom: 48px; padding: 6px; background: var(--bg-3); border-radius: var(--radius); width: max-content; margin-left: auto; margin-right: auto; border: 1px solid var(--border-col); }
+.hiw-tab { padding: 9px 22px; border-radius: 9px; font-size: 0.85rem; font-weight: 700; cursor: pointer; border: none; background: none; color: var(--text-muted); transition: var(--transition); }
+.hiw-tab.active { background: var(--cyan); color: var(--navy-deep); }
+.hiw-tab:not(.active):hover { color: var(--text); background: rgba(0,194,232,0.08); }
 
-/* FAQ */
+.hiw-content { display: none; }
+.hiw-content.active { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+
+.hiw-steps { display: flex; flex-direction: column; gap: 0; }
+.hiw-step { display: flex; gap: 20px; position: relative; padding-bottom: 32px; cursor: pointer; }
+.hiw-step:last-child { padding-bottom: 0; }
+.hiw-step-line { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+.hiw-step-dot { width: 44px; height: 44px; border-radius: 50%; background: var(--bg-3); border: 2px solid var(--border-col); display: flex; align-items: center; justify-content: center; font-family: 'Manrope', sans-serif; font-size: 0.85rem; font-weight: 800; color: var(--text-muted); transition: var(--transition); flex-shrink: 0; }
+.hiw-step.active .hiw-step-dot { background: var(--cyan); border-color: var(--cyan); color: var(--navy-deep); box-shadow: 0 0 0 6px rgba(0,194,232,0.15); }
+.hiw-step-connector { flex: 1; width: 2px; background: var(--border-col); margin: 6px 0; min-height: 24px; border-radius: 2px; }
+.hiw-step:last-child .hiw-step-connector { display: none; }
+.hiw-step-body { padding-top: 8px; }
+.hiw-step-title { font-family: 'Manrope', sans-serif; font-size: 1rem; font-weight: 800; color: var(--text-muted); margin-bottom: 6px; transition: var(--transition); }
+.hiw-step.active .hiw-step-title { color: var(--text); }
+.hiw-step-desc { font-size: 0.875rem; line-height: 1.72; color: var(--text-muted); max-width: 300px; }
+
+.hiw-visual { position: relative; }
+.hiw-visual-card { background: var(--bg-card); border: 1px solid var(--border-col); border-radius: var(--radius-xl); padding: 36px; position: relative; overflow: hidden; min-height: 300px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+.hiw-visual-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--cyan), transparent); }
+.hiw-panel { display: none; flex-direction: column; align-items: center; gap: 16px; }
+.hiw-panel.active { display: flex; animation: fade-panel 0.4s ease; }
+@keyframes fade-panel { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.hiw-icon-big { font-size: 3.5rem; }
+.hiw-panel h4 { font-family: 'Manrope', sans-serif; font-size: 1.2rem; font-weight: 800; color: var(--text); }
+.hiw-panel p { font-size: 0.9rem; max-width: 280px; }
+.hiw-code { background: rgba(0,0,0,0.3); border: 1px solid rgba(0,194,232,0.15); border-radius: 10px; padding: 16px 20px; font-family: 'Courier New', monospace; font-size: 0.82rem; color: var(--cyan); text-align: left; width: 100%; max-width: 320px; }
+.hiw-code .ck { color: var(--sky-light); } .hiw-code .cv { color: #a8e8c8; } .hiw-code .cc { color: var(--text-muted); }
+
+/* ========= COMPLIANCE ========= */
+.compliance-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+.compliance-img-box { aspect-ratio: 4/3; background: linear-gradient(135deg, rgba(0,194,232,0.06), rgba(13,27,64,0.8)); border-radius: var(--radius-xl); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 20px; border: 1px solid var(--border-col); position: relative; overflow: hidden; }
+.compliance-img-box::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(0,194,232,0.1), transparent 65%); }
+.compliance-globe { font-size: 5rem; position: relative; z-index: 1; }
+.compliance-tag-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; position: relative; z-index: 1; }
+.comp-tag { padding: 4px 12px; background: rgba(0,194,232,0.12); border: 1px solid rgba(0,194,232,0.25); border-radius: 100px; font-size: 0.75rem; font-weight: 700; color: var(--cyan); }
+.compliance-content h2 { margin-bottom: 18px; }
+.compliance-content > p { margin-bottom: 28px; font-size: 0.95rem; }
+.compliance-list { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: 36px; }
+.compliance-list li { display: flex; gap: 14px; align-items: flex-start; }
+.ci { width: 42px; height: 42px; flex-shrink: 0; border-radius: 10px; background: rgba(0,194,232,0.08); border: 1px solid rgba(0,194,232,0.15); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+.ct h5 { font-size: 0.92rem; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.ct p { font-size: 0.83rem; }
+
+/* ========= FAQ — NEW ========= */
 .faq-section { background: var(--ink); }
-.faq-layout { display: grid; grid-template-columns: 1fr 1.6fr; gap: 80px; align-items: start; }
-.faq-sidebar h2 { margin-bottom: 16px; }
-.faq-sidebar p { margin-bottom: 32px; }
-.faq-list { display: flex; flex-direction: column; gap: 12px; }
-.faq-item { background: var(--slate); border: 1px solid rgba(255,255,255,0.07); border-radius: var(--radius); overflow: hidden; transition: border-color var(--transition); }
-.faq-item.open { border-color: rgba(245,197,24,0.3); }
-.faq-question { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; cursor: pointer; font-weight: 600; font-size: 0.95rem; width: 100%; background: none; border: none; color: var(--white); gap: 16px; text-align: left; font-family: 'Inter',sans-serif; }
+.faq-header { text-align: center; max-width: 580px; margin: 0 auto 56px; }
+.faq-header h2 { margin-bottom: 14px; }
+.faq-header p { margin-bottom: 24px; }
+.faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.faq-list { display: flex; flex-direction: column; gap: 0; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid rgba(255,255,255,0.07); }
+.faq-item { background: var(--slate); border-bottom: 1px solid rgba(255,255,255,0.06); transition: background var(--transition); }
+.faq-item:last-child { border-bottom: none; }
+.faq-item.open { background: rgba(245,197,24,0.04); }
+.faq-question { display: flex; align-items: center; justify-content: space-between; padding: 18px 22px; cursor: pointer; font-weight: 600; font-size: 0.92rem; width: 100%; background: none; border: none; color: var(--body); gap: 16px; text-align: left; font-family: 'Inter',sans-serif; transition: color var(--transition); }
 .faq-question:hover { color: var(--gold); }
-.faq-icon { width: 28px; height: 28px; flex-shrink: 0; border-radius: 50%; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: transform var(--transition), background var(--transition); }
+.faq-icon { width: 24px; height: 24px; flex-shrink: 0; border-radius: 6px; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; font-size: 1rem; line-height: 1; transition: transform var(--transition), background var(--transition), color var(--transition); color: var(--body); }
 .faq-item.open .faq-icon { transform: rotate(45deg); background: rgba(245,197,24,0.15); color: var(--gold); }
 .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
 .faq-item.open .faq-answer { max-height: 400px; }
-.faq-answer-inner { padding: 0 24px 20px; font-size: 0.9rem; line-height: 1.75; color: var(--body); }
+.faq-answer-inner { padding: 0 22px 18px; font-size: 0.875rem; line-height: 1.78; color: var(--body); border-top: 1px solid rgba(245,197,24,0.1); padding-top: 14px; }
+.faq-cta-card { background: linear-gradient(135deg, rgba(245,197,24,0.07), rgba(245,197,24,0.02)); border: 1px solid rgba(245,197,24,0.15); border-radius: var(--radius-lg); padding: 32px; display: flex; flex-direction: column; justify-content: space-between; min-height: 200px; }
+.faq-cta-card h4 { margin-bottom: 10px; font-size: 1.15rem; }
+.faq-cta-card p { font-size: 0.875rem; margin-bottom: 24px; }
+.faq-still { display: flex; align-items: center; gap: 10px; margin-top: 12px; font-size: 0.82rem; color: var(--body); }
+.faq-still a { color: var(--gold); font-weight: 600; }
+.faq-still a:hover { text-decoration: underline; }
 
-/* CTA */
-.cta-banner { background: var(--midnight); padding: 120px 0; position: relative; overflow: hidden; }
-.cta-banner::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 600px; height: 600px; background: radial-gradient(ellipse, rgba(245,197,24,0.05) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
-.cta-inner { text-align: center; max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
-.cta-inner h2 { margin-bottom: 20px; }
-.cta-inner > p { margin-bottom: 40px; font-size: 1.05rem; }
-.cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-.trust-pills { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-top: 40px; }
-.trust-pill { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--body); }
-.trust-pill .check { color: var(--gold); }
+/* ========= CTA ========= */
+.cta-banner { background: var(--bg-2); padding: 100px 0; position: relative; overflow: hidden; }
+.cta-banner::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 560px; height: 560px; background: radial-gradient(ellipse, rgba(0,194,232,0.07), transparent 65%); border-radius: 50%; pointer-events: none; }
+.cta-inner { text-align: center; max-width: 640px; margin: 0 auto; position: relative; z-index: 1; }
+.cta-inner h2 { margin-bottom: 18px; }
+.cta-inner > p { margin-bottom: 36px; font-size: 1.02rem; }
+.cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.trust-pills { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-top: 36px; }
+.trust-pill { display: flex; align-items: center; gap: 7px; font-size: 0.8rem; color: var(--text-muted); }
+.trust-pill .ck { color: var(--cyan); font-weight: 700; }
 
-/* FOOTER */
-.site-footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.07); padding: 64px 0 32px; }
-.footer-top { display: grid; grid-template-columns: 1.5fr repeat(3,1fr); gap: 48px; margin-bottom: 56px; }
-.footer-brand p { font-size: 0.9rem; margin: 16px 0 24px; max-width: 260px; }
-.footer-social { display: flex; gap: 10px; }
-.social-btn { width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; color: var(--body); transition: var(--transition); }
+/* ========= FOOTER — COMPACT ========= */
+.site-footer { background: var(--slate); border-top: 1px solid rgba(255,255,255,0.07); padding: 40px 0 24px; }
+.footer-inner { display: flex; flex-direction: column; gap: 28px; }
+.footer-main { display: flex; align-items: flex-start; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+.footer-brand-block { display: flex; flex-direction: column; gap: 12px; max-width: 280px; }
+.footer-brand-block p { font-size: 0.85rem; color: var(--body); line-height: 1.6; }
+.footer-social { display: flex; gap: 8px; }
+.social-btn { width: 32px; height: 32px; border-radius: 7px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: var(--body); transition: var(--transition); }
 .social-btn:hover { background: rgba(245,197,24,0.12); border-color: rgba(245,197,24,0.3); color: var(--gold); transform: translateY(-2px); }
-.footer-col h5 { font-family: 'Syne',sans-serif; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--white); margin-bottom: 20px; }
-.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-.footer-col ul li a { font-size: 0.875rem; color: var(--body); transition: color var(--transition); }
-.footer-col ul li a:hover { color: var(--gold); }
-.footer-bottom { border-top: 1px solid rgba(255,255,255,0.07); padding-top: 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-.footer-bottom p { font-size: 0.82rem; color: var(--body); }
-.footer-bottom-links { display: flex; gap: 24px; }
-.footer-bottom-links a { font-size: 0.82rem; color: var(--body); transition: color var(--transition); }
+.footer-links-row { display: flex; gap: 48px; flex-wrap: wrap; }
+.footer-link-group { display: flex; flex-direction: column; gap: 10px; }
+.footer-link-group h5 { font-family: 'Syne',sans-serif; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--white); margin-bottom: 2px; }
+.footer-link-group a { font-size: 0.85rem; color: var(--body); transition: color var(--transition); }
+.footer-link-group a:hover { color: var(--gold); }
+.footer-divider { height: 1px; background: rgba(255,255,255,0.07); }
+.footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-bottom p { font-size: 0.8rem; color: var(--body); }
+.footer-bottom-links { display: flex; gap: 20px; }
+.footer-bottom-links a { font-size: 0.8rem; color: var(--body); transition: color var(--transition); }
 .footer-bottom-links a:hover { color: var(--gold); }
 
-/* MOBILE NAV */
-.mobile-nav { display: none; position: fixed; inset: 0; background: rgba(10,14,26,0.98); backdrop-filter: blur(20px); z-index: 9999; flex-direction: column; align-items: center; justify-content: center; gap: 28px; }
-.mobile-nav.open { display: flex; }
-.mobile-nav a { font-family: 'Syne',sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--white); transition: color var(--transition); }
-.mobile-nav a:hover { color: var(--gold); }
-.mobile-nav-close { position: absolute; top: 24px; right: 24px; background: none; border: none; color: var(--white); font-size: 1.8rem; cursor: pointer; }
-
-/* RESPONSIVE */
+/* ========= RESPONSIVE ========= */
 @media (max-width: 1024px) {
-  .hero-inner { grid-template-columns: 1fr; gap: 48px; }
-  /* .hero-visual { order: -1; } */
+  .hero-inner { grid-template-columns: 1fr; gap: 44px; }
+  .hero-visual { order: -1; }
   .features-grid { grid-template-columns: repeat(2,1fr); }
-  .compliance-inner { grid-template-columns: 1fr; gap: 48px; }
-  .faq-layout { grid-template-columns: 1fr; gap: 40px; }
-  .footer-top { grid-template-columns: 1fr 1fr; }
+  .compliance-inner { grid-template-columns: 1fr; gap: 40px; }
+  .hiw-content.active { grid-template-columns: 1fr; }
+  .hiw-visual { display: none; }
   .offer-inner { grid-template-columns: 1fr; }
-  .offer-image { width: 100%; height: 180px; }
-  .hero-visual{ display: none !important; }
-  
+  .offer-img-box { width: 100%; height: 160px; }
+  .faq-grid { grid-template-columns: 1fr; }
+  .carousel-slide { flex: 0 0 calc(50% - 10px); }
 }
 @media (max-width: 768px) {
   :root { --section-py: 64px; }
-  .nav-links, .nav-cta .btn { display: none; }
+  .nav-links, .nav-cta .link-signin, .nav-cta .btn { display: none; }
   .nav-toggle { display: flex; }
-  .hero { min-height: auto; padding: 100px 0 80px; }
+  .hero { min-height: auto; padding: 96px 0 72px; }
   .features-grid { grid-template-columns: 1fr; }
-  .steps-grid { grid-template-columns: 1fr; }
-  .steps-grid::before { display: none; }
-  .footer-top { grid-template-columns: 1fr; }
-  .offer-inner { padding: 32px 24px; }
+  .hero-stats { gap: 20px; flex-wrap: wrap; }
   .section-header { flex-direction: column; align-items: flex-start; }
-  .hero-stats { gap: 24px; flex-wrap: wrap; }
-  .footer-bottom { flex-direction: column; text-align: center; }
-  .accessKey_logo{ display: none !important; }
+  .offer-inner { padding: 28px 22px; }
+  .footer-inner { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .footer-bar { flex-direction: column; text-align: center; }
+  .carousel-slide { flex: 0 0 calc(100% - 0px); }
+  .hiw-tabs { flex-wrap: wrap; }
 }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
   </style>
 </head>
 <body>
 
 <!-- NAV -->
-<nav class="site-nav" role="navigation" aria-label="Main navigation">
+<nav class="site-nav" id="mainNav">
   <div class="container">
     <div class="nav-inner">
       <a href="#" class="nav-logo" aria-label="AccessiKey Home">
-        <span class="logo-icon" aria-hidden="true">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path d="M10 2L3 6v8l7 4 7-4V6L10 2z" fill="#0A0E1A" opacity="0.7"/>
-            <circle cx="10" cy="10" r="3" fill="#0A0E1A"/>
-            <path d="M10 7v6M7 10h6" stroke="#F5C518" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-        </span>
-        <span class="accessKey_logo">
-          Accessi<span class="accent">Key</span>
-        </span>
+        <!-- SVG logo based on actual brand: navy A with cyan key -->
+        <img src="assets/images/AccessiKeylogo.jpg" alt="AccessiKey Logo" class="nav-logo-img">
+        <!-- <span class="nav-logo-text"><span class="ak-dark">Accessi</span><span class="ak-cyan">Key</span></span> -->
       </a>
+
       <ul class="nav-links">
-        <li class="has-dropdown"><a href="#features">Product</a></li>
-        <li class="has-dropdown"><a href="#how-it-works">Solutions</a></li>
+        <li class="has-dd"><a href="#features">Product</a></li>
+        <li class="has-dd"><a href="#how-it-works">Solutions</a></li>
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="#compliance">Accessibility</a></li>
       </ul>
+
       <div class="nav-cta">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle light/dark mode">🌙</button>
         <a href="#" class="link-signin">Sign In</a>
-        <a href="#get-started" class="btn btn-gold btn-sm">Get Started</a>
+        <a href="#get-started" class="btn btn-cyan btn-sm">Get Started</a>
       </div>
-      <button class="nav-toggle" aria-label="Open menu">
+
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -296,14 +396,14 @@ img { max-width: 100%; display: block; }
 </nav>
 
 <!-- Mobile Nav -->
-<nav class="mobile-nav">
-  <button class="mobile-nav-close">✕</button>
+<nav class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" id="navClose">✕</button>
   <a href="#features">Product</a>
   <a href="#how-it-works">Solutions</a>
   <a href="#pricing">Pricing</a>
   <a href="#compliance">Accessibility</a>
   <a href="#">Sign In</a>
-  <a href="#get-started" class="btn btn-gold">Get Started Free</a>
+  <a href="#get-started" class="btn btn-cyan">Get Started Free</a>
 </nav>
 
 <!-- HERO -->
@@ -315,17 +415,18 @@ img { max-width: 100%; display: block; }
   <div class="container">
     <div class="hero-inner">
       <div class="hero-content">
-        <div class="hero-eyebrow">
+        <div class="hero-pill">
           <span class="dot"></span>
           Accessibility Platform
         </div>
-        <h1 class="hero-heading">
-          Accessibility that feels<br>effortless — for<br>
-          <span class="highlight"><span class="hero-type">everyone</span><span class="cursor" style="color:var(--gold);animation:blink 1s step-end infinite">|</span></span>
+        <h1 class="hero-h1">
+          Accessibility that feels<br>
+          effortless — for<br>
+          <span class="highlight"><span class="hero-type">everyone</span><span style="color:var(--cyan);animation:blink 1s step-end infinite">|</span></span>
         </h1>
         <p class="hero-desc">AccessiKey helps your website become more inclusive with smart profiles, reading aids, contrast tools, and clear reporting — without complex setup.</p>
         <div class="hero-actions">
-          <a href="#get-started" class="btn btn-gold">Get Started Free</a>
+          <a href="#get-started" class="btn btn-cyan">Get Started Free</a>
           <a href="#demo" class="btn btn-outline">Free Demo</a>
         </div>
         <div class="hero-stats">
@@ -343,14 +444,15 @@ img { max-width: 100%; display: block; }
           </div>
         </div>
       </div>
+
       <div class="hero-visual">
         <div class="hero-card">
           <div class="card-shield">
-            <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M40 4L8 18v22c0 18 13.6 34.8 32 39 18.4-4.2 32-21 32-39V18L40 4z" fill="rgba(245,197,24,0.15)" stroke="#F5C518" stroke-width="1.5"/>
-              <circle cx="40" cy="30" r="8" fill="#F5C518" opacity="0.9"/>
-              <path d="M30 48c0-5.5 4.5-10 10-10s10 4.5 10 10" stroke="#F5C518" stroke-width="2" stroke-linecap="round"/>
-              <path d="M34 36l3 3 9-9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M36 4L6 16v20c0 16 12 31 30 36 18-5 30-20 30-36V16L36 4z" fill="rgba(0,194,232,0.12)" stroke="#00C2E8" stroke-width="1.5"/>
+              <circle cx="36" cy="28" r="7" fill="#00C2E8" opacity="0.9"/>
+              <path d="M27 44c0-5 4-9 9-9s9 4 9 9" stroke="#00C2E8" stroke-width="2" stroke-linecap="round"/>
+              <path d="M31 33l3 3 8-8" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
           <div class="card-title">Accessibility Shield</div>
@@ -368,57 +470,105 @@ img { max-width: 100%; display: block; }
   </div>
 </section>
 
-<!-- PLATFORM BAR -->
-<div class="platform-bar">
+<!-- PLATFORM CAROUSEL -->
+<section class="platform-section" id="platform">
   <div class="container">
-    <div class="platform-label">Platform</div>
-    <div class="platform-track-wrap">
-      <div class="platform-track" id="platformTrack">
-        <div class="platform-item"><div class="pi-avatar" style="background:#22c55e">TL</div><div class="pi-dot pi-dot-green"></div>Team Lead</div>
-        <div class="platform-item"><div class="pi-avatar" style="background:#F5C518">UX</div><div class="pi-dot pi-dot-yellow"></div>UX/UI</div>
-        <div class="platform-item"><div class="pi-avatar" style="background:#22c55e">TL</div><div class="pi-dot pi-dot-green"></div>Team Lead</div>
-        <div class="platform-item"><div class="pi-avatar" style="background:#3b82f6">UX</div><div class="pi-dot pi-dot-blue"></div>UX/UI</div>
-        <div class="platform-item"><div class="pi-avatar" style="background:#22c55e">DE</div><div class="pi-dot pi-dot-green"></div>Developer</div>
-        <div class="platform-item"><div class="pi-avatar" style="background:#F5C518">QA</div><div class="pi-dot pi-dot-yellow"></div>QA Engineer</div>
-        <div class="platform-item"><div class="pi-avatar" style="background:#22c55e">PM</div><div class="pi-dot pi-dot-green"></div>Product</div>
-        <div class="platform-item"><div class="pi-avatar" style="background:#3b82f6">DS</div><div class="pi-dot pi-dot-blue"></div>Designer</div>
-        <!-- Duplicated for seamless loop -->
-        <div class="platform-item"><div class="pi-avatar" style="background:#22c55e">TL</div><div class="pi-dot pi-dot-green"></div>Team Lead</div>
-        <div class="platform-item"><div class="pi-avatar" style="background:#F5C518">UX</div><div class="pi-dot pi-dot-yellow"></div>UX/UI</div>
-        <div class="platform-item"><div class="pi-avatar" style="background:#22c55e">TL</div><div class="pi-dot pi-dot-green"></div>Team Lead</div>
-        <div class="platform-item"><div class="pi-avatar" style="background:#3b82f6">UX</div><div class="pi-dot pi-dot-blue"></div>UX/UI</div>
-        <div class="platform-item"><div class="pi-avatar" style="background:#22c55e">DE</div><div class="pi-dot pi-dot-green"></div>Developer</div>
-        <div class="platform-item"><div class="pi-avatar" style="background:#F5C518">QA</div><div class="pi-dot pi-dot-yellow"></div>QA Engineer</div>
-        <div class="platform-item"><div class="pi-avatar" style="background:#22c55e">PM</div><div class="pi-dot pi-dot-green"></div>Product</div>
-        <div class="platform-item"><div class="pi-avatar" style="background:#3b82f6">DS</div><div class="pi-dot pi-dot-blue"></div>Designer</div>
+    <div class="platform-header reveal">
+      <h2>Built for every team on your <span class="highlight">platform</span></h2>
+      <p>AccessiKey fits naturally into the workflows your team already uses.</p>
+    </div>
+
+    <div class="carousel-wrap reveal">
+      <div class="carousel-track-outer">
+        <div class="carousel-track" id="carTrack">
+
+          <div class="carousel-slide">
+            <div class="carousel-card">
+              <div class="cc-icon">🧑‍💼</div>
+              <div class="cc-title">Team Leads</div>
+              <div class="cc-desc">Get a bird's-eye view of your site's compliance status and team progress in one clear dashboard.</div>
+              <span class="cc-tag">Management</span>
+            </div>
+          </div>
+
+          <div class="carousel-slide">
+            <div class="carousel-card">
+              <div class="cc-icon">🎨</div>
+              <div class="cc-title">UX / UI Designers</div>
+              <div class="cc-desc">Design with accessibility in mind from day one using our live contrast checker and WCAG pattern library.</div>
+              <span class="cc-tag">Design</span>
+            </div>
+          </div>
+
+          <div class="carousel-slide">
+            <div class="carousel-card">
+              <div class="cc-icon">👨‍💻</div>
+              <div class="cc-title">Developers</div>
+              <div class="cc-desc">Drop in a single script tag and let AccessiKey handle the heavy lifting — no framework lock-in.</div>
+              <span class="cc-tag">Engineering</span>
+            </div>
+          </div>
+
+          <div class="carousel-slide">
+            <div class="carousel-card">
+              <div class="cc-icon">🔍</div>
+              <div class="cc-title">QA Engineers</div>
+              <div class="cc-desc">Run automated accessibility audits as part of your CI/CD pipeline with zero extra configuration.</div>
+              <span class="cc-tag">Quality</span>
+            </div>
+          </div>
+
+          <div class="carousel-slide">
+            <div class="carousel-card">
+              <div class="cc-icon">📦</div>
+              <div class="cc-title">Product Managers</div>
+              <div class="cc-desc">Track accessibility coverage as a first-class product metric alongside performance and conversion.</div>
+              <span class="cc-tag">Product</span>
+            </div>
+          </div>
+
+          <div class="carousel-slide">
+            <div class="carousel-card">
+              <div class="cc-icon">🌍</div>
+              <div class="cc-title">Compliance Officers</div>
+              <div class="cc-desc">Generate ready-to-submit VPAT documents and maintain a verifiable audit trail for legal teams.</div>
+              <span class="cc-tag">Legal & Compliance</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="carousel-controls">
+        <button class="car-btn" id="carPrev" aria-label="Previous">&#8592;</button>
+        <div class="car-dots" id="carDots"></div>
+        <button class="car-btn" id="carNext" aria-label="Next">&#8594;</button>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- OFFER -->
-<section class="section section-dark" id="trial">
+<!-- OFFER / FREE TRIAL -->
+<section class="section section-alt" id="trial">
   <div class="container">
     <div class="offer-inner reveal">
       <div class="offer-content">
         <div class="offer-tag">Latest Offer</div>
         <h2 class="offer-heading">Start a free trial — <span class="highlight">unlock Pro features instantly</span></h2>
-        <p class="offer-desc">Try AccessiKey Pro on your site (branding, reports, and advanced controls). No complex setup — just add the script and go.</p>
+        <p class="offer-desc">Try AccessiKey Pro on your site — branding, reports, and advanced controls. No complex setup, just add the script and go.</p>
         <ul class="offer-bullets">
-          <li>14-day Pro trial</li>
+          <li>14-day Pro trial, no credit card</li>
           <li>Widget branding + modes</li>
-          <li>Exportable reports</li>
+          <li>Exportable compliance reports</li>
         </ul>
         <div class="offer-actions">
-          <a href="#" class="btn btn-gold">Start Free Trial</a>
+          <a href="#" class="btn btn-cyan">Start Free Trial</a>
           <a href="#" class="btn btn-outline">Free Demo</a>
         </div>
       </div>
-      <div class="offer-image">
-        <div class="offer-image-placeholder">
-          <span class="big-icon">💻</span>
-          <p>Pro Dashboard</p>
-        </div>
+      <div class="offer-img-box">
+        <span class="big-icon">💻</span>
+        <p>Pro Dashboard</p>
       </div>
     </div>
   </div>
@@ -436,36 +586,12 @@ img { max-width: 100%; display: block; }
       <a href="#" class="btn btn-outline btn-sm">Explore More</a>
     </div>
     <div class="features-grid">
-      <article class="feat-card featured reveal reveal-delay-1">
-        <div class="feat-icon">🔗</div>
-        <h4>Full Accessibility Widget</h4>
-        <p>Reading aids, contrast modes, keyboard support, and user controls in a clear layout.</p>
-      </article>
-      <article class="feat-card reveal reveal-delay-2">
-        <div class="feat-icon">🌐</div>
-        <h4>Nano &amp; Expandable Modes</h4>
-        <p>Lightweight options for speed-first sites — expand when the user needs it.</p>
-      </article>
-      <article class="feat-card reveal reveal-delay-3">
-        <div class="feat-icon">👤</div>
-        <h4>Smart Profiles</h4>
-        <p>One click profiles for low vision, dyslexia, color blindness, and focus support.</p>
-      </article>
-      <article class="feat-card reveal reveal-delay-1">
-        <div class="feat-icon">📊</div>
-        <h4>Detailed Reporting</h4>
-        <p>Exportable dashboards and audit logs to track and prove compliance over time.</p>
-      </article>
-      <article class="feat-card reveal reveal-delay-2">
-        <div class="feat-icon">🎨</div>
-        <h4>Widget Branding</h4>
-        <p>Match the accessibility widget to your brand colors, logo, and custom messaging.</p>
-      </article>
-      <article class="feat-card reveal reveal-delay-3">
-        <div class="feat-icon">⚡</div>
-        <h4>Zero-Config Setup</h4>
-        <p>Paste one script snippet or install the plugin — no rebuild or dev work required.</p>
-      </article>
+      <article class="feat-card featured reveal reveal-delay-1"><div class="feat-icon">🔗</div><h4>Full Accessibility Widget</h4><p>Reading aids, contrast modes, keyboard support, and user controls in a clean layout.</p></article>
+      <article class="feat-card reveal reveal-delay-2"><div class="feat-icon">🌐</div><h4>Nano &amp; Expandable Modes</h4><p>Lightweight options for speed-first sites — expand only when the user needs it.</p></article>
+      <article class="feat-card reveal reveal-delay-3"><div class="feat-icon">👤</div><h4>Smart Profiles</h4><p>One-click profiles for low vision, dyslexia, colour blindness, and focus support.</p></article>
+      <article class="feat-card reveal reveal-delay-1"><div class="feat-icon">📊</div><h4>Detailed Reporting</h4><p>Exportable dashboards and audit logs to track and prove compliance over time.</p></article>
+      <article class="feat-card reveal reveal-delay-2"><div class="feat-icon">🎨</div><h4>Widget Branding</h4><p>Match the widget to your brand colours, logo, and custom messaging.</p></article>
+      <article class="feat-card reveal reveal-delay-3"><div class="feat-icon">⚡</div><h4>Zero-Config Setup</h4><p>Paste one script snippet or install the plugin — no rebuild or dev work required.</p></article>
     </div>
   </div>
 </section>
@@ -473,42 +599,159 @@ img { max-width: 100%; display: block; }
 <!-- HOW IT WORKS -->
 <section class="section how-section" id="how-it-works">
   <div class="container">
-    <div class="section-header reveal" style="justify-content:space-between;align-items:center">
-      <div class="text">
-        <span class="eyebrow">Process</span>
-        <h2>How <span class="highlight">it works</span></h2>
-        <p>Keep it simple: install, customize, and let users control their experience.</p>
-      </div>
-      <a href="#" class="btn btn-outline btn-sm">Home</a>
+    <div class="how-header reveal">
+      <span class="eyebrow">Process</span>
+      <h2>How <span class="highlight">it works</span></h2>
+      <p>Three simple steps to a fully accessible, compliant website — no heavy lifting required.</p>
     </div>
-    <div class="steps-grid">
-      <div class="step-card reveal reveal-delay-1">
-        <div class="step-num">01</div>
-        <h4>Add the script</h4>
-        <p>Paste one snippet (or use a plugin). No heavy rebuild required.</p>
+
+    <div class="hiw-tabs reveal" id="hiwTabs">
+      <button class="hiw-tab active" data-tab="0">For Developers</button>
+      <button class="hiw-tab" data-tab="1">For Designers</button>
+      <button class="hiw-tab" data-tab="2">For Teams</button>
+    </div>
+
+    <!-- TAB 0: Developers -->
+    <div class="hiw-content active" id="hiwContent0">
+      <div class="hiw-steps" id="hiwSteps0">
+        <div class="hiw-step active" data-panel="0">
+          <div class="hiw-step-line">
+            <div class="hiw-step-dot">01</div>
+            <div class="hiw-step-connector"></div>
+          </div>
+          <div class="hiw-step-body">
+            <div class="hiw-step-title">Add the script</div>
+            <div class="hiw-step-desc">Paste one snippet before &lt;/body&gt; or install our WordPress / Shopify plugin. No rebuild needed.</div>
+          </div>
+        </div>
+        <div class="hiw-step" data-panel="1">
+          <div class="hiw-step-line">
+            <div class="hiw-step-dot">02</div>
+            <div class="hiw-step-connector"></div>
+          </div>
+          <div class="hiw-step-body">
+            <div class="hiw-step-title">Configure your settings</div>
+            <div class="hiw-step-desc">Choose Full, Nano, or Expandable mode. Set brand colours and position in your dashboard.</div>
+          </div>
+        </div>
+        <div class="hiw-step" data-panel="2">
+          <div class="hiw-step-line">
+            <div class="hiw-step-dot">03</div>
+            <div class="hiw-step-connector"></div>
+          </div>
+          <div class="hiw-step-body">
+            <div class="hiw-step-title">Go live in minutes</div>
+            <div class="hiw-step-desc">Your site is instantly accessible. Monitor usage in real-time and export compliance reports.</div>
+          </div>
+        </div>
       </div>
-      <div class="step-card reveal reveal-delay-2">
-        <div class="step-num">02</div>
-        <h4>Choose modes</h4>
-        <p>Select Full / Nano / Expandable and brand the widget with your colors.</p>
-      </div>
-      <div class="step-card reveal reveal-delay-3">
-        <div class="step-num">03</div>
-        <h4>Support real users</h4>
-        <p>Profiles and controls help visitors adjust reading, contrast, and navigation.</p>
+      <div class="hiw-visual">
+        <div class="hiw-visual-card">
+          <div class="hiw-panel active" id="hiwPanel0-0">
+            <div class="hiw-icon-big">🖥️</div>
+            <h4>One-line Install</h4>
+            <p>The fastest path to accessibility compliance.</p>
+            <div class="hiw-code"><span class="cc">&lt;!-- Add before &lt;/body&gt; --&gt;</span><br><span class="ck">&lt;script</span> <span class="cv">src</span>=<span style="color:#fca5a5">"https://cdn.accessikey.com/ak.js"</span><span class="ck">&gt;&lt;/script&gt;</span></div>
+          </div>
+          <div class="hiw-panel" id="hiwPanel0-1">
+            <div class="hiw-icon-big">⚙️</div>
+            <h4>Dashboard Settings</h4>
+            <p>Choose widget mode, colours, and position from a clean visual editor.</p>
+          </div>
+          <div class="hiw-panel" id="hiwPanel0-2">
+            <div class="hiw-icon-big">🚀</div>
+            <h4>Live in Minutes</h4>
+            <p>Real-time monitoring and compliance logs as soon as your site is live.</p>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- TAB 1: Designers -->
+    <div class="hiw-content" id="hiwContent1">
+      <div class="hiw-steps" id="hiwSteps1">
+        <div class="hiw-step active" data-panel="0">
+          <div class="hiw-step-line"><div class="hiw-step-dot">01</div><div class="hiw-step-connector"></div></div>
+          <div class="hiw-step-body"><div class="hiw-step-title">Check contrast ratios</div><div class="hiw-step-desc">Use the live contrast checker to verify every colour combination meets WCAG AA standards.</div></div>
+        </div>
+        <div class="hiw-step" data-panel="1">
+          <div class="hiw-step-line"><div class="hiw-step-dot">02</div><div class="hiw-step-connector"></div></div>
+          <div class="hiw-step-body"><div class="hiw-step-title">Apply smart profiles</div><div class="hiw-step-desc">Preview your design in dyslexia, high-contrast, and motion-free modes before handoff.</div></div>
+        </div>
+        <div class="hiw-step" data-panel="2">
+          <div class="hiw-step-line"><div class="hiw-step-dot">03</div><div class="hiw-step-connector"></div></div>
+          <div class="hiw-step-body"><div class="hiw-step-title">Brand the widget</div><div class="hiw-step-desc">Customise widget colours, position, and label language to perfectly match your design system.</div></div>
+        </div>
+      </div>
+      <div class="hiw-visual">
+        <div class="hiw-visual-card">
+          <div class="hiw-panel active" id="hiwPanel1-0">
+            <div class="hiw-icon-big">🎨</div>
+            <h4>Contrast Checker</h4>
+            <p>Instant WCAG AA/AAA contrast analysis right in your browser.</p>
+          </div>
+          <div class="hiw-panel" id="hiwPanel1-1">
+            <div class="hiw-icon-big">👁️</div>
+            <h4>Profile Preview</h4>
+            <p>See your site exactly as users with visual impairments would see it.</p>
+          </div>
+          <div class="hiw-panel" id="hiwPanel1-2">
+            <div class="hiw-icon-big">✨</div>
+            <h4>Branded Widget</h4>
+            <p>A widget that feels like it belongs — because it does.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: Teams -->
+    <div class="hiw-content" id="hiwContent2">
+      <div class="hiw-steps" id="hiwSteps2">
+        <div class="hiw-step active" data-panel="0">
+          <div class="hiw-step-line"><div class="hiw-step-dot">01</div><div class="hiw-step-connector"></div></div>
+          <div class="hiw-step-body"><div class="hiw-step-title">Connect your workspace</div><div class="hiw-step-desc">Add all your sites to one central dashboard and invite your team with role-based access.</div></div>
+        </div>
+        <div class="hiw-step" data-panel="1">
+          <div class="hiw-step-line"><div class="hiw-step-dot">02</div><div class="hiw-step-connector"></div></div>
+          <div class="hiw-step-body"><div class="hiw-step-title">Monitor compliance</div><div class="hiw-step-desc">Track compliance scores across all sites and get instant alerts when issues are detected.</div></div>
+        </div>
+        <div class="hiw-step" data-panel="2">
+          <div class="hiw-step-line"><div class="hiw-step-dot">03</div><div class="hiw-step-connector"></div></div>
+          <div class="hiw-step-body"><div class="hiw-step-title">Export &amp; report</div><div class="hiw-step-desc">Generate VPAT and compliance documents for legal teams and clients in one click.</div></div>
+        </div>
+      </div>
+      <div class="hiw-visual">
+        <div class="hiw-visual-card">
+          <div class="hiw-panel active" id="hiwPanel2-0">
+            <div class="hiw-icon-big">🏢</div>
+            <h4>Team Workspace</h4>
+            <p>Centralised control of all sites, roles, and compliance across your organisation.</p>
+          </div>
+          <div class="hiw-panel" id="hiwPanel2-1">
+            <div class="hiw-icon-big">📈</div>
+            <h4>Live Dashboard</h4>
+            <p>Real-time compliance scores and issue tracking across every property.</p>
+          </div>
+          <div class="hiw-panel" id="hiwPanel2-2">
+            <div class="hiw-icon-big">📄</div>
+            <h4>One-click Reports</h4>
+            <p>VPAT documents and audit trails generated instantly — ready for legal review.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
 <!-- COMPLIANCE -->
-<section class="section" id="compliance">
+<section class="section section-alt" id="compliance">
   <div class="container">
     <div class="compliance-inner">
       <div class="compliance-visual reveal">
-        <div class="compliance-img-placeholder">
-          <span class="compliance-icon-large">🌐</span>
-          <div class="compliance-tags">
+        <div class="compliance-img-box">
+          <span class="compliance-globe">🌐</span>
+          <div class="compliance-tag-row">
             <span class="comp-tag">WCAG 2.2</span>
             <span class="comp-tag">ADA</span>
             <span class="comp-tag">EN 301 549</span>
@@ -520,24 +763,15 @@ img { max-width: 100%; display: block; }
       <div class="compliance-content reveal reveal-delay-1">
         <span class="eyebrow">Compliance</span>
         <h2>Stay <span class="highlight">ahead</span> of global accessibility laws</h2>
-        <p>Our technology and services consistently align with the latest regulations in the U.S., Canada, and Europe, adhering to the highest global compliance standards for digital assets — WCAG 2.2 and EN 301 549.</p>
+        <p>Our technology consistently aligns with the latest regulations in the U.S., Canada, and Europe — adhering to WCAG 2.2 and EN 301 549.</p>
         <ul class="compliance-list">
-          <li>
-            <div class="comp-icon">🇺🇸</div>
-            <div class="comp-text"><h5>ADA &amp; Section 508</h5><p>Full alignment with U.S. federal digital accessibility law.</p></div>
-          </li>
-          <li>
-            <div class="comp-icon">🇪🇺</div>
-            <div class="comp-text"><h5>EAA &amp; EN 301 549</h5><p>European Accessibility Act &amp; harmonized EU standards.</p></div>
-          </li>
-          <li>
-            <div class="comp-icon">🌍</div>
-            <div class="comp-text"><h5>WCAG 2.1 / 2.2 AA</h5><p>World-class global guidelines — AA and AAA levels.</p></div>
-          </li>
+          <li><div class="ci">🇺🇸</div><div class="ct"><h5>ADA &amp; Section 508</h5><p>Full alignment with U.S. federal digital accessibility law.</p></div></li>
+          <li><div class="ci">🇪🇺</div><div class="ct"><h5>EAA &amp; EN 301 549</h5><p>European Accessibility Act &amp; harmonised EU standards.</p></div></li>
+          <li><div class="ci">🌍</div><div class="ct"><h5>WCAG 2.1 / 2.2 AA</h5><p>World-class global guidelines at AA and AAA levels.</p></div></li>
         </ul>
-        <div style="display:flex;gap:16px;flex-wrap:wrap">
-          <a href="#" class="btn btn-gold">Learn More</a>
-          <a href="#" class="btn btn-outline">Home</a>
+        <div style="display:flex;gap:14px;flex-wrap:wrap">
+          <a href="#" class="btn btn-cyan">Learn More</a>
+          <a href="#" class="btn btn-outline">View Standards</a>
         </div>
       </div>
     </div>
@@ -547,25 +781,24 @@ img { max-width: 100%; display: block; }
 <!-- FAQ -->
 <section class="section faq-section" id="faq">
   <div class="container">
-    <div class="faq-layout">
-      <div class="faq-sidebar reveal">
-        <span class="eyebrow">FAQ</span>
-        <h2>Common <span class="highlight">questions</span></h2>
-        <p>Everything you need to know about AccessiKey and web accessibility.</p>
-        <a href="#" class="btn btn-outline btn-sm">Read the docs</a>
-      </div>
-      <div class="faq-list reveal reveal-delay-1">
+    <div class="faq-header reveal">
+      <span class="eyebrow">FAQ</span>
+      <h2>Common <span class="highlight">questions</span></h2>
+      <p>Everything you need to know about AccessiKey and web accessibility.</p>
+    </div>
+    <div class="faq-grid reveal reveal-delay-1">
+      <div class="faq-list">
         <div class="faq-item open">
           <button class="faq-question" aria-expanded="true">What is AccessiKey?<span class="faq-icon">+</span></button>
           <div class="faq-answer"><div class="faq-answer-inner">AccessiKey is a web accessibility platform that adds a smart widget to your site, giving visitors tools to adjust contrast, font size, reading mode, and much more — with zero configuration required on your end.</div></div>
         </div>
         <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">How do I install AccessiKey on my website?<span class="faq-icon">+</span></button>
-          <div class="faq-answer"><div class="faq-answer-inner">Simply paste a single JavaScript snippet before the closing &lt;/body&gt; tag on your pages. For WordPress users, we offer a one-click plugin that handles everything automatically.</div></div>
+          <button class="faq-question" aria-expanded="false">How do I install AccessiKey?<span class="faq-icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer-inner">Paste a single JavaScript snippet before the closing &lt;/body&gt; tag. WordPress users get a one-click plugin that handles everything automatically.</div></div>
         </div>
         <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">Does AccessiKey make my site fully WCAG compliant?<span class="faq-icon">+</span></button>
-          <div class="faq-answer"><div class="faq-answer-inner">AccessiKey significantly improves your compliance score and addresses the majority of WCAG 2.1/2.2 AA criteria. For a fully audited certification, we recommend pairing the widget with a professional accessibility audit.</div></div>
+          <button class="faq-question" aria-expanded="false">Does it make my site WCAG compliant?<span class="faq-icon">+</span></button>
+          <div class="faq-answer"><div class="faq-answer-inner">AccessiKey significantly improves your compliance score and addresses the majority of WCAG 2.1/2.2 AA criteria. For a fully audited certification, we recommend pairing the widget with a professional audit.</div></div>
         </div>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">Can I customize the widget to match my brand?<span class="faq-icon">+</span></button>
@@ -576,6 +809,24 @@ img { max-width: 100%; display: block; }
           <div class="faq-answer"><div class="faq-answer-inner">Absolutely. Our free tier covers essential accessibility features for up to one website. Upgrade to Pro for unlimited sites, reports, and advanced modes.</div></div>
         </div>
       </div>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div class="faq-cta-card">
+          <div>
+            <h4>Still have questions?</h4>
+            <p>Our accessibility experts are happy to walk you through setup, compliance requirements, or anything else.</p>
+          </div>
+          <div>
+            <a href="#" class="btn btn-gold btn-sm">Talk to an expert</a>
+            <div class="faq-still">or <a href="#">read the full docs →</a></div>
+          </div>
+        </div>
+        <div style="background:var(--slate);border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius-lg);padding:28px;">
+          <div style="font-size:2rem;margin-bottom:12px;">📋</div>
+          <h4 style="margin-bottom:8px;font-size:1rem;">WCAG 2.2 Checklist</h4>
+          <p style="font-size:0.85rem;margin-bottom:16px;">Download our free audit checklist to see exactly where your site stands today.</p>
+          <a href="#" class="btn btn-outline btn-sm">Download free →</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -584,112 +835,109 @@ img { max-width: 100%; display: block; }
 <section class="cta-banner" id="get-started">
   <div class="container">
     <div class="cta-inner reveal">
-      <span class="eyebrow" style="justify-content:center;margin-bottom:20px">Get Started</span>
+      <span class="eyebrow" style="justify-content:center;margin-bottom:18px">Get Started</span>
       <h2>Ready to make your website <span class="highlight">accessible to all?</span></h2>
-      <p>Join 15,000+ websites that trust AccessiKey. No credit card required — set up in minutes.</p>
+      <p>Join 15,000+ websites that trust AccessiKey. No credit card — set up in minutes.</p>
       <div class="cta-actions">
-        <a href="#trial" class="btn btn-gold">Start Free Trial</a>
-        <a href="#demo"  class="btn btn-outline">Book a Demo</a>
+        <a href="#trial" class="btn btn-cyan">Start Free Trial</a>
+        <a href="#demo" class="btn btn-outline">Book a Demo</a>
       </div>
       <div class="trust-pills">
-        <div class="trust-pill"><span class="check">✓</span> No credit card</div>
-        <div class="trust-pill"><span class="check">✓</span> 14-day free trial</div>
-        <div class="trust-pill"><span class="check">✓</span> Cancel any time</div>
-        <div class="trust-pill"><span class="check">✓</span> WCAG 2.2 compliant</div>
+        <div class="trust-pill"><span class="ck">✓</span> No credit card</div>
+        <div class="trust-pill"><span class="ck">✓</span> 14-day free trial</div>
+        <div class="trust-pill"><span class="ck">✓</span> Cancel any time</div>
+        <div class="trust-pill"><span class="ck">✓</span> WCAG 2.2 compliant</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- FOOTER — Compact -->
 <footer class="site-footer">
   <div class="container">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <a href="#" class="nav-logo">
-          <span class="logo-icon">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path d="M10 2L3 6v8l7 4 7-4V6L10 2z" fill="#0A0E1A" opacity="0.7"/>
-              <circle cx="10" cy="10" r="3" fill="#0A0E1A"/>
-              <path d="M10 7v6M7 10h6" stroke="#F5C518" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </span>
-          Accessi<span class="accent">Key</span>
-        </a>
-        <p>Making the web accessible for every user — effortlessly, and without complex setup.</p>
-        <div class="footer-social">
-          <a href="#" class="social-btn" aria-label="Twitter">𝕏</a>
-          <a href="#" class="social-btn" aria-label="LinkedIn">in</a>
-          <a href="#" class="social-btn" aria-label="GitHub">⌥</a>
-          <a href="#" class="social-btn" aria-label="YouTube">▶</a>
+    <div class="footer-inner">
+      <div class="footer-main">
+        <div class="footer-brand-block">
+          <a href="#" class="nav-logo" aria-label="AccessiKey Home">
+            <span class="logo-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M10 2L3 6v8l7 4 7-4V6L10 2z" fill="#0A0E1A" opacity="0.7"/>
+                <circle cx="10" cy="10" r="3" fill="#0A0E1A"/>
+                <path d="M10 7v6M7 10h6" stroke="#F5C518" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </span>
+            Accessi<span class="accent">Key</span>
+          </a>
+          <p>Making the web accessible for every user — effortlessly.</p>
+          <div class="footer-social">
+            <a href="#" class="social-btn" aria-label="Twitter">𝕏</a>
+            <a href="#" class="social-btn" aria-label="LinkedIn">in</a>
+            <a href="#" class="social-btn" aria-label="GitHub">⌥</a>
+          </div>
+        </div>
+        <div class="footer-links-row">
+          <div class="footer-link-group">
+            <h5>Product</h5>
+            <a href="#">Features</a>
+            <a href="#">Pricing</a>
+            <a href="#">Documentation</a>
+          </div>
+          <div class="footer-link-group">
+            <h5>Support</h5>
+            <a href="#">Contact</a>
+            <a href="#">API Reference</a>
+            <a href="#">Status</a>
+          </div>
+          <div class="footer-link-group">
+            <h5>Legal</h5>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">WCAG Statement</a>
+          </div>
         </div>
       </div>
-      <div class="footer-col">
-        <h5>Supports</h5>
-        <ul>
-          <li><a href="#">Feedback Form</a></li>
-          <li><a href="#">Documentation</a></li>
-          <li><a href="#">Community</a></li>
-          <li><a href="#">API Reference</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Report Issues</h5>
-        <ul>
-          <li><a href="#">Report Issues Form</a></li>
-          <li><a href="#">Web Audit Monitor</a></li>
-          <li><a href="#">Contact</a></li>
-          <li><a href="#">Status Page</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Subscription</h5>
-        <ul>
-          <li><a href="#">Report Issues Form</a></li>
-          <li><a href="#">Web Audit Website List</a></li>
-          <li><a href="#">Settings</a></li>
-          <li><a href="#">Billing</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2026 AccessiKey. All rights reserved.</p>
-      <div class="footer-bottom-links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
-        <a href="#">Cookie Settings</a>
-        <a href="#">WCAG Statement</a>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <p>© 2026 AccessiKey. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Cookies</a>
+        </div>
       </div>
     </div>
   </div>
 </footer>
 
-<style>
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-</style>
-
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  // Sticky nav
-  const nav = document.querySelector('.site-nav');
-  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40), { passive: true });
 
-  // Mobile nav
-  const toggle = document.querySelector('.nav-toggle');
-  const mobileNav = document.querySelector('.mobile-nav');
-  const closeBtn = document.querySelector('.mobile-nav-close');
-  toggle?.addEventListener('click', () => mobileNav.classList.add('open'));
-  closeBtn?.addEventListener('click', () => mobileNav.classList.remove('open'));
-  mobileNav?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileNav.classList.remove('open')));
+  /* ---- Sticky nav ---- */
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40), {passive:true});
 
-  // Scroll reveal
-  const revealObs = new IntersectionObserver((entries) => {
+  /* ---- Theme toggle ---- */
+  const root = document.documentElement;
+  const themeBtn = document.getElementById('themeToggle');
+  themeBtn.addEventListener('click', () => {
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    themeBtn.textContent = isDark ? '🌙' : '☀️';
+  });
+
+  /* ---- Mobile nav ---- */
+  document.getElementById('navToggle').addEventListener('click', () => document.getElementById('mobileNav').classList.add('open'));
+  document.getElementById('navClose').addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open'));
+  document.querySelectorAll('.mobile-nav a').forEach(a => a.addEventListener('click', () => document.getElementById('mobileNav').classList.remove('open')));
+
+  /* ---- Scroll reveal ---- */
+  const revealObs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
-  }, { threshold: 0.1 });
+  }, {threshold: 0.1});
   document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-  // FAQ
-  document.querySelectorAll('.faq-question').forEach(btn => {
+  /* ---- FAQ ---- */
+   document.querySelectorAll('.faq-question').forEach(btn => {
     btn.addEventListener('click', () => {
       const item = btn.closest('.faq-item');
       const isOpen = item.classList.contains('open');
@@ -698,57 +946,116 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Animated counters
-  const countObs = new IntersectionObserver((entries) => {
+  /* ---- Animated counters ---- */
+  const countObs = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (!e.isIntersecting) return;
       const el = e.target;
       const target = parseInt(el.dataset.count);
       const suffix = el.dataset.suffix || '';
-      let current = 0;
+      let c = 0;
       const step = target / 60;
-      const timer = setInterval(() => {
-        current = Math.min(current + step, target);
-        el.textContent = Math.round(current).toLocaleString() + suffix;
-        if (current >= target) clearInterval(timer);
+      const t = setInterval(() => {
+        c = Math.min(c + step, target);
+        el.textContent = Math.round(c).toLocaleString() + suffix;
+        if (c >= target) clearInterval(t);
       }, 20);
       countObs.unobserve(el);
     });
-  }, { threshold: 0.5 });
+  }, {threshold: 0.5});
   document.querySelectorAll('[data-count]').forEach(el => countObs.observe(el));
 
-  // Typing effect
-  const typeTarget = document.querySelector('.hero-type');
-  if (typeTarget) {
-    const words = ['everyone', 'all users', 'visitors', 'your team'];
-    let wi = 0, ci = 0, deleting = false;
+  /* ---- Typing effect ---- */
+  const typeEl = document.querySelector('.hero-type');
+  if (typeEl) {
+    const words = ['everyone','all users','visitors','your team'];
+    let wi=0, ci=0, del=false;
     const type = () => {
-      const word = words[wi];
-      if (!deleting) { typeTarget.textContent = word.slice(0, ci + 1); ci++; if (ci === word.length) { deleting = true; setTimeout(type, 1800); return; } }
-      else { typeTarget.textContent = word.slice(0, ci - 1); ci--; if (ci === 0) { deleting = false; wi = (wi + 1) % words.length; } }
-      setTimeout(type, deleting ? 55 : 85);
+      const w = words[wi];
+      if (!del) { typeEl.textContent = w.slice(0,ci+1); ci++; if (ci===w.length) { del=true; setTimeout(type,1800); return; } }
+      else { typeEl.textContent = w.slice(0,ci-1); ci--; if (ci===0) { del=false; wi=(wi+1)%words.length; } }
+      setTimeout(type, del?55:85);
     };
-    setTimeout(type, 1200);
+    setTimeout(type, 1000);
   }
 
-  // Feature card tilt
+  /* ---- Feature card tilt ---- */
   document.querySelectorAll('.feat-card').forEach(card => {
     card.addEventListener('mousemove', e => {
-      const rect = card.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      card.style.transform = `translateY(-6px) rotateX(${y * -6}deg) rotateY(${x * 6}deg)`;
+      const r = card.getBoundingClientRect();
+      const x = (e.clientX-r.left)/r.width-0.5;
+      const y = (e.clientY-r.top)/r.height-0.5;
+      card.style.transform = `translateY(-5px) rotateX(${y*-5}deg) rotateY(${x*5}deg)`;
     });
-    card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+    card.addEventListener('mouseleave', () => { card.style.transform=''; });
   });
 
-  // Parallax on hero orbs
+  /* ---- CAROUSEL ---- */
+  const track = document.getElementById('carTrack');
+  const slides = track.querySelectorAll('.carousel-slide');
+  const dotsEl = document.getElementById('carDots');
+  let perView = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
+  let current = 0;
+  const total = slides.length;
+  const maxSlide = total - perView;
+
+  // build dots
+  for (let i=0; i<=maxSlide; i++) {
+    const d = document.createElement('div');
+    d.className = 'car-dot' + (i===0?' active':'');
+    d.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(d);
+  }
+
+  function goTo(n) {
+    current = Math.max(0, Math.min(n, maxSlide));
+    const slideW = slides[0].offsetWidth + 20;
+    track.style.transform = `translateX(-${current * slideW}px)`;
+    dotsEl.querySelectorAll('.car-dot').forEach((d,i) => d.classList.toggle('active', i===current));
+  }
+
+  document.getElementById('carPrev').addEventListener('click', () => goTo(current-1));
+  document.getElementById('carNext').addEventListener('click', () => goTo(current+1));
+
+  window.addEventListener('resize', () => {
+    const newPer = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
+    if (newPer !== perView) { perView = newPer; current = 0; goTo(0); }
+  });
+
+  /* ---- How It Works tabs ---- */
+  const hiwTabs = document.querySelectorAll('.hiw-tab');
+  hiwTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const ti = parseInt(tab.dataset.tab);
+      hiwTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelectorAll('.hiw-content').forEach(c => c.classList.remove('active'));
+      document.getElementById('hiwContent'+ti).classList.add('active');
+    });
+  });
+
+  /* ---- How It Works step clicks ---- */
+  document.querySelectorAll('.hiw-steps').forEach((stepsEl, tabIdx) => {
+    stepsEl.querySelectorAll('.hiw-step').forEach((step, si) => {
+      step.addEventListener('click', () => {
+        stepsEl.querySelectorAll('.hiw-step').forEach(s => s.classList.remove('active'));
+        step.classList.add('active');
+        const tabPanels = document.querySelectorAll(`[id^="hiwPanel${tabIdx}-"]`);
+        tabPanels.forEach(p => p.classList.remove('active'));
+        const target = document.getElementById(`hiwPanel${tabIdx}-${si}`);
+        if (target) target.classList.add('active');
+      });
+    });
+  });
+
+  /* ---- Parallax orbs ---- */
   window.addEventListener('scroll', () => {
     const sy = window.scrollY;
-    document.querySelectorAll('.hero-orb').forEach((o, i) => {
-      o.style.transform = `translateY(${sy * (i % 2 === 0 ? 0.08 : -0.05)}px)`;
+    document.querySelectorAll('.hero-orb').forEach((o,i) => {
+      o.style.transform = `translateY(${sy*(i%2===0?0.07:-0.04)}px)`;
     });
-  }, { passive: true });
+  }, {passive:true});
+
 });
 </script>
 </body>
