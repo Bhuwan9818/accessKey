@@ -728,7 +728,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
    ======================================================== */
 @media (max-width: 1024px) {
   .hero-inner { grid-template-columns: 1fr; gap: 40px; }
-  .hero-visual { order: -1;}
+  .hero-visual { order: -1; }
   .features-grid { grid-template-columns: repeat(2,1fr); }
   .compliance-inner { grid-template-columns: 1fr; gap: 36px; }
   .hiw-content.active { grid-template-columns: 1fr; }
@@ -745,7 +745,7 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   :root { --section-py: 60px; }
   .nav-links, .nav-cta .link-signin, .nav-cta .btn { display: none; }
   .nav-toggle { display: flex; }
-  .hero { min-height: auto; padding: 100px 0 68px; }
+  .hero { min-height: auto; padding: 90px 0 68px; }
   .features-grid { grid-template-columns: 1fr; }
   .hero-stats { gap: 16px; flex-wrap: wrap; }
   .section-header { flex-direction: column; align-items: flex-start; }
@@ -755,7 +755,6 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   .hiw-tabs { flex-wrap: wrap; width: 100%; justify-content: flex-start; }
   .compliance-inner { gap: 28px; }
   .nav-cta .theme-toggle { display: flex; }
-  .hero-visual { order: -1; display: none;}
 }
 
 @media (max-width: 480px) {
@@ -764,6 +763,5 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   .cta-actions { flex-direction: column; align-items: center; }
   .cta-actions .btn { min-width: 200px; }
   .offer-actions { flex-direction: column; }
-  h1 { font-size: clamp(1.4rem,5vw,4rem); }
   .offer-actions .btn { width: 100%; justify-content: center; }
 }
