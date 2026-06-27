@@ -755,6 +755,11 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   .hiw-tabs { flex-wrap: wrap; width: 100%; justify-content: flex-start; }
   .compliance-inner { gap: 28px; }
   .nav-cta .theme-toggle { display: flex; }
+  
+}
+
+@media (max-width: 600px) {
+  .features-grid{ grid-template-columns: 1fr !important; }
 }
 
 @media (max-width: 480px) {
@@ -764,4 +769,6 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   .cta-actions .btn { min-width: 200px; }
   .offer-actions { flex-direction: column; }
   .offer-actions .btn { width: 100%; justify-content: center; }
+  #themeToggle{display: none;}
+  .hero-cta-group{display: flex; flex-direction: column; gap: 12px; margin-top: 32px; }
 }
